@@ -1,0 +1,19 @@
+package com.levi.springboot_review.service.impl;
+
+import com.levi.springboot_review.dao.ProductDao;
+import com.levi.springboot_review.model.Product;
+import com.levi.springboot_review.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ProductServiceImpl implements ProductService {
+
+    @Autowired
+    private ProductDao productDao;
+
+    @Override
+    public Product getProductById(Integer productId) {
+        return productDao.getProductById(productId);
+    }
+}
