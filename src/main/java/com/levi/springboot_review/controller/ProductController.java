@@ -1,6 +1,7 @@
 package com.levi.springboot_review.controller;
 
 import com.levi.springboot_review.constant.ProductCategory;
+import com.levi.springboot_review.dto.ProductQueryParams;
 import com.levi.springboot_review.dto.ProductRequest;
 import com.levi.springboot_review.model.Product;
 import com.levi.springboot_review.service.ProductService;
@@ -23,9 +24,13 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
         System.out.println("1111");
 
-        List<Product> productList = productService.getProducts(category, search);
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

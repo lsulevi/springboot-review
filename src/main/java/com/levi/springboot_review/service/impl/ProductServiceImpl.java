@@ -2,6 +2,7 @@ package com.levi.springboot_review.service.impl;
 
 import com.levi.springboot_review.constant.ProductCategory;
 import com.levi.springboot_review.dao.ProductDao;
+import com.levi.springboot_review.dto.ProductQueryParams;
 import com.levi.springboot_review.dto.ProductRequest;
 import com.levi.springboot_review.model.Product;
 import com.levi.springboot_review.service.ProductService;
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory productCategory,String search) {
-        return productDao.getProducts(productCategory, search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override
