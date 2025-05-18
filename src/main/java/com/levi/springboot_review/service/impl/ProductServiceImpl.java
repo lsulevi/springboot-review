@@ -1,6 +1,7 @@
 package com.levi.springboot_review.service.impl;
 
 import com.levi.springboot_review.dao.ProductDao;
+import com.levi.springboot_review.dto.ProductRequest;
 import com.levi.springboot_review.model.Product;
 import com.levi.springboot_review.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Integer productId) {
         return productDao.getProductById(productId);
+    }
+
+    @Override
+    public Integer createProduct(ProductRequest productRequest) {
+        return productDao.createProduct(productRequest);
     }
 }
