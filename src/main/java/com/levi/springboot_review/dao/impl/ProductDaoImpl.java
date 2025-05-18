@@ -1,5 +1,6 @@
 package com.levi.springboot_review.dao.impl;
 
+import com.levi.springboot_review.constant.ProductCategory;
 import com.levi.springboot_review.dao.ProductDao;
 import com.levi.springboot_review.dto.ProductRequest;
 import com.levi.springboot_review.model.Product;
@@ -23,12 +24,21 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProducts(ProductCategory productCategory,String search) {
 
-        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product";
-        //Map<String, Object> map = new HashMap<>();
+        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date FROM product where 1=1 ";
+        Map<String, Object> map = new HashMap<>();
 
-        List<Product> productList = namedParameterJdbcTemplate.query(sql,new ProductRowMapper());
+        if(productCategory != null){
+            sql = sql + " AND category= :productCategory";
+            map.put("productCategory",productCategory.name());
+        }
+
+        if (search != null){
+            sql = sql + " AND product_name like :search";
+            map.put("search", "%" + search + "%" );
+        }
+        List<Product> productList = namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
 
         return productList;
     }

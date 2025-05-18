@@ -1,5 +1,6 @@
 package com.levi.springboot_review.controller;
 
+import com.levi.springboot_review.constant.ProductCategory;
 import com.levi.springboot_review.dto.ProductRequest;
 import com.levi.springboot_review.model.Product;
 import com.levi.springboot_review.service.ProductService;
@@ -18,8 +19,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProduct(){
-        List<Product> productList = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search
+    ){
+        System.out.println("1111");
+
+        List<Product> productList = productService.getProducts(category, search);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
@@ -39,7 +45,6 @@ public class ProductController {
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
         Integer productId = productService.createProduct(productRequest);
-        System.out.println("1111");
         Product product = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
